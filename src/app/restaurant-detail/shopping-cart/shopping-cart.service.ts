@@ -18,7 +18,7 @@ export class ShoppingCartService {
         }
     }
 
-    removerItem(item:CartItem){
+    removeItem(item:CartItem){
         this.items.splice(this.items.indexOf(item), 1);
     }
 
