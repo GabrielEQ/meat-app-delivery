@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {RadioOption} from '../shared/radio/radio-option.model';
+import { RadioOption } from '../shared/radio/radio-option.model';
 import { OrderService } from './order.service';
-import { CartItem } from '../restaurant-detail/shopping-cart/cart-item.model'
-
+import { CartItem } from '../restaurant-detail/shopping-cart/cart-item.model';
+import { Order, OrderItem } from './order.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'mt-order',
@@ -10,14 +11,22 @@ import { CartItem } from '../restaurant-detail/shopping-cart/cart-item.model'
 })
 export class OrderComponent implements OnInit {
 
+  delivery: number = 8
+
   paymentOptions: RadioOption[] = [
     {label: 'Dinheiro', value: 'MON'},
     {label: 'Cartão de Débito', value:'DEB'},
     {label: 'Cartão Refeição', value: 'REF'}
   ];
-  constructor(private orderService: OrderService) { }
+
+  constructor(private orderService: OrderService,
+              private router: Router) { }
 
   ngOnInit() {
+  }
+
+  itemsValue(): number{
+    return this.orderService.itemsValue();
   }
 
   cartItems(): CartItem[]{
@@ -34,6 +43,17 @@ export class OrderComponent implements OnInit {
 
   remove(item: CartItem){
     this.orderService.remove(item)
+  }
+
+  checkOrder(order: Order){
+    order.orderItems = this.cartItems()
+    .map((item:CartItem)=> new OrderItem(item.quantity, item.menuItem.id));
+    this.orderService.checkOrder(order).subscribe((orderId: string) => {
+      this.router.navigate(['/orderSummary']);
+      console.log(`Compra concluída: ${orderId}`);
+      this.orderService.clear();
+    });
+    console.log(order);
   }
 
 }

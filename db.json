@@ -370,5 +370,69 @@
       "restaurantId": "tasty-treats"
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "address": "Luiz Rota, 278, casa 1",
+      "number": "278",
+      "optionalAddress": "casa 1",
+      "paymentOption": "MON",
+      "orderItems": [
+        {
+          "quantity": 1,
+          "menuId": "cup-cake"
+        },
+        {
+          "quantity": 1,
+          "menuId": "donut"
+        },
+        {
+          "quantity": 1,
+          "menuId": "bread"
+        }
+      ],
+      "id": 1
+    },
+    {
+      "address": "Rua luiz rotta, casa 1",
+      "number": "278",
+      "optionalAddress": "casa 1",
+      "paymentOption": "DEB",
+      "orderItems": [
+        {
+          "quantity": 1,
+          "menuId": "zlasagna"
+        },
+        {
+          "quantity": 1,
+          "menuId": "ceasar"
+        },
+        {
+          "quantity": 1,
+          "menuId": "greensandwich"
+        }
+      ],
+      "id": 2
+    },
+    {
+      "address": "Luiz Rota, 278, casa 1",
+      "number": "278",
+      "optionalAddress": "casa 1",
+      "paymentOption": "MON",
+      "orderItems": [
+        {
+          "quantity": 1,
+          "menuId": "zlasagna"
+        },
+        {
+          "quantity": 1,
+          "menuId": "greensandwich"
+        },
+        {
+          "quantity": 1,
+          "menuId": "ceasar"
+        }
+      ],
+      "id": 3
+    }
+  ]
 }
