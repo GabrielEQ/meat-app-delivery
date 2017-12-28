@@ -21,5 +21,5 @@ export const ROUTES: Routes = [
         ]
     },
     {path: 'order', component: OrderComponent},
-    {path: 'orderSummary', component: OrderSummaryComponent}
+    {path: 'order-summary', component: OrderSummaryComponent}
 ]
