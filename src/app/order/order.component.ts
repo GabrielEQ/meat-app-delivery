@@ -6,6 +6,8 @@ import { CartItem } from '../restaurant-detail/shopping-cart/cart-item.model';
 import { Order, OrderItem } from './order.model';
 import { Router } from '@angular/router';
 
+import 'rxjs/add/operator/do';
+
 @Component({
   selector: 'mt-order',
   templateUrl: './order.component.html'
@@ -13,12 +15,10 @@ import { Router } from '@angular/router';
 export class OrderComponent implements OnInit {
 
   emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-
   numberPattern = /^[0-9]*$/
-
   orderForm: FormGroup
-
   delivery: number = 8
+  orderId: string
 
   paymentOptions: RadioOption[] = [
     {label: 'Dinheiro', value: 'MON'},
@@ -76,15 +76,24 @@ export class OrderComponent implements OnInit {
     this.orderService.remove(item)
   }
 
+  isOrderCompleted(): boolean{
+    return this.orderId !== undefined
+  }
+
   checkOrder(order: Order){
     order.orderItems = this.cartItems()
     .map((item:CartItem)=> new OrderItem(item.quantity, item.menuItem.id));
-    this.orderService.checkOrder(order).subscribe((orderId: string) => {
+    this.orderService.checkOrder(order)
+    .do((orderId:string) => {
+      this.orderId = orderId
+    })
+    .subscribe((orderId: string) => {
       this.router.navigate(['/order-summary']);
       console.log(`Compra concluída: ${orderId}`);
       this.orderService.clear();
-    });
-    console.log(order);
+    })
   }
+
+
 
 }
